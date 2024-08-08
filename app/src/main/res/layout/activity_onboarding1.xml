@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Onboarding1ScreanActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Tambahkan ImageView -->
+        <ImageView
+            android:id="@+id/ImageView_Onboarding1Screen"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="64dp"
+            android:contentDescription="Onboading Image1"
+            android:src="@drawable/image1_removebg"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- TextView di bawah gambar -->
+        <TextView
+            android:id="@+id/TextView_onboading1screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="Atur tugas dan catatanmu dengan mudah disini"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ImageView_Onboarding1Screen" />
+
+        <!-- ImageView untuk lingkaran -->
+        <ImageView
+            android:id="@+id/circle1"
+            android:layout_width="30dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/circle_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/TextView_onboading1screen" />
+
+        <ImageView
+            android:id="@+id/circle2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_unselected"
+            app:layout_constraintBottom_toBottomOf="@+id/circle1"
+            app:layout_constraintEnd_toStartOf="@+id/circle3"
+            app:layout_constraintStart_toEndOf="@+id/circle1"
+            app:layout_constraintTop_toTopOf="@+id/circle1"
+            android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:id="@+id/circle3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="168dp"
+            android:background="@drawable/circle_unselected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/circle2"
+            app:layout_constraintTop_toTopOf="@+id/circle1" />
+
+        <!-- CardView sebagai Button pertama -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_button1_onboarding1screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/red_button"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/circle1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="Lanjut"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- MaterialButton sebagai Button kedua -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/textbutton_button2_onboarding1screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:text="Lewati"
+            android:textColor="@color/red_button"
+            android:textSize="20sp"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardview_button1_onboarding1screen"
+            app:strokeColor="@color/red_button"
+            app:strokeWidth="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
