@@ -6,4 +6,6 @@
     <color name="gray_button">#b6bbc3</color>
     <color name="gray_text">#3c4d61</color>
     <color name="hint_color">#131842</color>
+    <color name="background_bottom_navigation">#f7f8f8</color>
+    <color name="background_button_catatan">#fde5e3</color>
 </resources>

@@ -13,51 +13,37 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.example.taskapp.databinding.ActivityLoginBinding
 
 class LoginScreenActivity : AppCompatActivity() {
 
-    private lateinit var emailInput: TextInputEditText
-    private lateinit var passwordInput: TextInputEditText
-    private lateinit var loginButton: MaterialButton
-    private lateinit var titleLogin: TextView
-    private lateinit var passwordLayout: TextInputLayout
-    private lateinit var forgotPasswordTextView: TextView
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
-
-        // Initialize views
-        emailInput = findViewById(R.id.emailInputEditText)
-        passwordInput = findViewById(R.id.passwordInputEditText)
-        loginButton = findViewById(R.id.login_button)
-        titleLogin = findViewById(R.id.title_login)
-        passwordLayout = findViewById(R.id.textInput_password_login)
-        forgotPasswordTextView = findViewById(R.id.textView_forgot_password)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Set focus change listeners
-        emailInput.setOnFocusChangeListener { _, hasFocus ->
+        binding.emailInputEditText.setOnFocusChangeListener { _, hasFocus ->
             handleFieldFocusChange(hasFocus)
         }
-        passwordInput.setOnFocusChangeListener { _, hasFocus ->
+        binding.passwordInputEditText.setOnFocusChangeListener { _, hasFocus ->
             handleFieldFocusChange(hasFocus)
         }
 
         // Set text change listeners
-        emailInput.addTextChangedListener(textWatcher)
-        passwordInput.addTextChangedListener(textWatcher)
+        binding.emailInputEditText.addTextChangedListener(textWatcher)
+        binding.passwordInputEditText.addTextChangedListener(textWatcher)
 
         // Set login button click listener to show popup
-        loginButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             showPopup()
         }
 
         // Set forgot password text view click listener
-        forgotPasswordTextView.setOnClickListener {
+        binding.textViewForgotPassword.setOnClickListener {
             val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
             startActivity(intent)
         }
@@ -66,13 +52,13 @@ class LoginScreenActivity : AppCompatActivity() {
     private fun handleFieldFocusChange(hasFocus: Boolean) {
         if (hasFocus) {
             // Change button color to red and hide title when any field is focused
-            loginButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_button))
-            titleLogin.visibility = View.GONE
+            binding.loginButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_button))
+            binding.titleLogin.visibility = View.GONE
         } else {
             // Reset button color and show title if no field is focused
-            loginButton.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_button))
-            if (emailInput.text.isNullOrEmpty() && passwordInput.text.isNullOrEmpty()) {
-                titleLogin.visibility = View.VISIBLE
+            binding.loginButton.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_button))
+            if (binding.emailInputEditText.text.isNullOrEmpty() && binding.passwordInputEditText.text.isNullOrEmpty()) {
+                binding.titleLogin.visibility = View.VISIBLE
             }
         }
     }
@@ -82,10 +68,10 @@ class LoginScreenActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             // Ensure the button color is updated if text is present
-            if (emailInput.text!!.isNotEmpty() || passwordInput.text!!.isNotEmpty()) {
-                loginButton.setBackgroundColor(ContextCompat.getColor(this@LoginScreenActivity, R.color.red_button))
+            if (binding.emailInputEditText.text!!.isNotEmpty() || binding.passwordInputEditText.text!!.isNotEmpty()) {
+                binding.loginButton.setBackgroundColor(ContextCompat.getColor(this@LoginScreenActivity, R.color.red_button))
             } else {
-                loginButton.setBackgroundColor(ContextCompat.getColor(this@LoginScreenActivity, R.color.gray_button))
+                binding.loginButton.setBackgroundColor(ContextCompat.getColor(this@LoginScreenActivity, R.color.gray_button))
             }
         }
 
@@ -120,8 +106,14 @@ class LoginScreenActivity : AppCompatActivity() {
         }
 
         btnNegative.setOnClickListener {
-            // Handle Cancel button click
-            alertDialog.dismiss()
+            onSkipButtonClicked()
         }
     }
+
+    private fun onSkipButtonClicked() {
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }

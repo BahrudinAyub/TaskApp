@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".CatatanActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <!-- Tombol Kembali -->
+        <ImageView
+            android:id="@+id/btnBack_catatan"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/buttonback_catatan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/text_button_back_catatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Kembali"
+            android:textColor="@color/red_button"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack_catatan"
+            app:layout_constraintStart_toEndOf="@id/btnBack_catatan"
+            app:layout_constraintTop_toTopOf="@id/btnBack_catatan" />
+
+        <!-- ImageView untuk Judul -->
+        <ImageView
+            android:id="@+id/iconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_lamp_tittle"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/titleEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack_catatan"
+            tools:ignore="ContentDescription" />
+
+        <!-- Judul yang dapat diisi -->
+        <EditText
+            android:id="@+id/titleEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Judul di sini"
+            android:inputType="text"
+            android:textColor="@color/gray_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iconTitle"
+            app:layout_constraintTop_toBottomOf="@id/btnBack_catatan" />
+
+        <!-- Checkbox Item -->
+        <CheckBox
+            android:id="@+id/checkBoxItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/white"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Sekotak mie instan"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+
+        <!-- EditText untuk menggantikan CheckBox -->
+        <EditText
+            android:id="@+id/editTextReplacement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/white"
+            android:fontFamily="@font/poppins_light"
+            android:hint="Masukkan teks di sini"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+
+
+        <!-- Toolbar di Bawah -->
+        <LinearLayout
+            android:id="@+id/toolbarEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@color/background_button_catatan"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!-- Bold Button -->
+            <TextView
+                android:id="@+id/btnBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="B"
+                android:textColor="@color/red_button"
+                android:textSize="20sp" />
+
+            <!-- Italic Button -->
+            <TextView
+                android:id="@+id/btnItalic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="/"
+                android:textColor="@color/red_button"
+                android:textSize="20sp" />
+
+            <!-- Underline Button -->
+            <TextView
+                android:id="@+id/btnUnderline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="U"
+                android:textColor="@color/red_button"
+                android:textSize="20sp" />
+
+            <!-- Strikethrough Button -->
+            <TextView
+                android:id="@+id/btnStrikethrough"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="S"
+                android:textColor="@color/red_button"
+                android:textSize="20sp" />
+
+            <!-- Undo Button -->
+            <ImageView
+                android:id="@+id/btnUndo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_undo" />
+
+            <!-- Redo Button -->
+            <ImageView
+                android:id="@+id/btnRedo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_redo" />
+
+            <!-- More Options Button -->
+            <ImageView
+                android:id="@+id/btnMoreOptions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_more" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

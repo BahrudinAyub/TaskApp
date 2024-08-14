@@ -179,7 +179,6 @@
                 android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_button"
             android:layout_width="0dp"
@@ -197,7 +196,6 @@
             app:layout_constraintTop_toBottomOf="@id/textInput_password"
             app:layout_constraintWidth_percent="0.8" />
 
-
         <include
             android:id="@+id/included_divider"
             layout="@layout/divider"
@@ -207,8 +205,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/register_button"
             android:layout_marginTop="20dp" />
-
-
 
         <ImageView
             android:id="@+id/google_button"
@@ -249,18 +245,35 @@
             android:clickable="true"
             android:focusable="true" />
 
-
-
         <TextView
             android:id="@+id/already_have_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Sudah punya akun? Masuk"
-            android:textColor="@android:color/holo_red_light"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Sudah punya akun? "
+            android:layout_marginStart="120dp"
+
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toStartOf="@id/login_link"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/google_button" />
+
+        <TextView
+            android:id="@+id/login_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Masuk"
+            android:textColor="@color/red_button"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/already_have_account"
+            app:layout_constraintStart_toEndOf="@id/already_have_account"
+            app:layout_constraintTop_toBottomOf="@id/google_button"
+            app:layout_constraintEnd_toStartOf="@id/already_have_account"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -11,46 +12,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskApp"
         tools:targetApi="31">
-
+        <activity
+            android:name=".CatatanActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="true" />
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Onboarding1ScreanActivity"
-            android:exported="true"></activity>
-
+            android:exported="true" />
         <activity
             android:name=".Onboarding2ScreenActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Onboarding3ScreenActivity"
-            android:exported="true"></activity>
-
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".LoginScreenActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ForgotPasswordScreenActivity"
-            android:exported="true"></activity>
-
-        <activity android:name=".VerifikasiScreenActivity"
+            android:exported="true" />
+        <activity
+            android:name=".VerifikasiScreenActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
-
-        <activity android:name=".NewPasswordScreenActivity"
-            android:exported="true" ></activity>
-
-
-
-
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".NewPasswordScreenActivity"
+            android:exported="true" />
     </application>
+
 </manifest>

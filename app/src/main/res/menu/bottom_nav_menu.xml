@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/navigation_1"
+        android:title="Catatan"
+        />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/navigation_2"
+        android:title="Tugas" />
+    <item
+        android:id="@+id/nav_notifications"
+        android:icon="@drawable/navigation_3"
+        android:title="Inspirasi" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/navigation_4"
+        android:title="Profil" />
+</menu>

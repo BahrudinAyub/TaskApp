@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.taskapp.databinding.ActivityRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
 import android.text.method.PasswordTransformationMethod
@@ -43,7 +44,7 @@ class RegisterActivity : AppCompatActivity() {
         val focusChangeListener = { view: View, hasFocus: Boolean ->
             if (hasFocus) {
                 binding.titleRegister.visibility = View.INVISIBLE
-                binding.registerButton.setBackgroundColor(resources.getColor(R.color.red_button))
+                binding.registerButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_button))
             } else {
                 updateRegisterButtonState()
             }
@@ -59,6 +60,7 @@ class RegisterActivity : AppCompatActivity() {
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (binding.passwordInputEditText.right - binding.passwordInputEditText.compoundDrawables[DRAWABLE_END].bounds.width())) {
                     togglePasswordVisibility()
+                    v.performClick() // Ensure performClick() is called
                     return@setOnTouchListener true
                 }
             }
@@ -79,10 +81,15 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.isEnabled = isNameFilled && isEmailFilled && isPasswordFilled
 
         if (binding.registerButton.isEnabled) {
-            binding.registerButton.setBackgroundColor(resources.getColor(R.color.red_button))
+            binding.registerButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_button))
         } else {
             binding.registerButton.setBackgroundColor(Color.GRAY)
         }
+        binding.loginLink.setOnClickListener {
+            val intent = Intent(this, LoginScreenActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun togglePasswordVisibility() {
@@ -101,4 +108,6 @@ class RegisterActivity : AppCompatActivity() {
         val intent = Intent(this, LoginScreenActivity::class.java)
         startActivity(intent)
     }
+
+
 }
