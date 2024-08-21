@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.taskapp.databinding.ActivityCatatanBinding
+import androidx.fragment.app.DialogFragment
 
 class CatatanActivity : AppCompatActivity() {
 
@@ -47,6 +48,9 @@ class CatatanActivity : AppCompatActivity() {
             binding.editTextReplacement.visibility = android.view.View.VISIBLE
             binding.editTextReplacement.requestFocus()  // Fokus pada EditText baru
         }
+        binding.btnMoreOptions.setOnClickListener {
+            val bottomSheetFragment = BottomSheetFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        }
     }
 }
-

@@ -8,4 +8,6 @@
     <color name="hint_color">#131842</color>
     <color name="background_bottom_navigation">#f7f8f8</color>
     <color name="background_button_catatan">#fde5e3</color>
+    <color name="background_bagikan">#fdcfcb</color>
+    <color name="garis_hapus">#efeef0</color>
 </resources>
