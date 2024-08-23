@@ -30,6 +30,12 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             pengingatBottomSheet.show(parentFragmentManager, pengingatBottomSheet.tag)
         }
 
+        // Mengatur klik listener untuk linear_label
+        binding.linearLabel.setOnClickListener {
+            val labelBottomSheet = LabelBottomSheetFragment()
+            labelBottomSheet.show(parentFragmentManager, labelBottomSheet.tag)
+        }
+
         return binding.root
     }
 

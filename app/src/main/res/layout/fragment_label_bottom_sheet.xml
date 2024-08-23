@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/white"
+    android:elevation="4dp"
+    android:clipToOutline="true"
+   >
+
+    <!-- Tombol Close -->
+    <ImageView
+        android:id="@+id/closeButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <!-- Judul -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Label"
+        android:textSize="18sp"
+        android:textColor="@color/red_button"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/closeButton"
+        app:layout_constraintStart_toEndOf="@+id/closeButton" />
+
+    <!-- Garis Pemisah -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/garis_hapus"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <!-- Label Nama -->
+    <TextView
+        android:id="@+id/label_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Nama Label"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <!-- Input Label -->
+    <EditText
+        android:id="@+id/label_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Contoh: Penting, etc."
+        android:background="@drawable/textfield"
+        android:padding="12dp"
+        android:fontFamily="@font/poppins_light"
+        android:textColorHint="@color/gray_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_name_title" />
+
+    <!-- Hint -->
+    <TextView
+        android:id="@+id/label_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Tekan “Enter” pada keyboard untuk membuat label lain"
+        android:textSize="12sp"
+        android:textColor="@color/gray_text"
+        android:fontFamily="@font/poppins_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_input" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

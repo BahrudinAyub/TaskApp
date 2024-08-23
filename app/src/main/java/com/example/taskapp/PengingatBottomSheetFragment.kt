@@ -1,5 +1,6 @@
 package com.example.taskapp
 
+import UlangiBottomSheetFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ class PengingatBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         _binding = FragmentPengingatBottomSheetBinding.inflate(inflater, container, false)
 
+        // Logika untuk Tanggal
         binding.linearTanggal.setOnClickListener {
             val datePickerBottomSheet = DatePickerBottomSheetFragment()
             datePickerBottomSheet.onDateSelected = { day, month, year ->
@@ -27,6 +29,7 @@ class PengingatBottomSheetFragment : BottomSheetDialogFragment() {
             datePickerBottomSheet.show(parentFragmentManager, datePickerBottomSheet.tag)
         }
 
+        // Logika untuk Waktu
         binding.linearWaktu.setOnClickListener {
             val timePickerBottomSheet = TimePickerBottomSheetFragment()
             timePickerBottomSheet.onTimeSelected = { hour, minute ->
@@ -34,6 +37,18 @@ class PengingatBottomSheetFragment : BottomSheetDialogFragment() {
                 binding.statusWaktu.text = selectedTime
             }
             timePickerBottomSheet.show(parentFragmentManager, timePickerBottomSheet.tag)
+        }
+
+        // Logika untuk Ulangi
+        binding.linearUlangi.setOnClickListener {
+            val ulangiBottomSheet = UlangiBottomSheetFragment()
+
+            // Menangani hasil dari UlangiBottomSheetFragment
+            ulangiBottomSheet.onSelectionMade = { selectedRepeatOption ->
+                binding.statusUlangi.text = selectedRepeatOption
+            }
+
+            ulangiBottomSheet.show(parentFragmentManager, ulangiBottomSheet.tag)
         }
 
         return binding.root
@@ -49,3 +64,4 @@ class PengingatBottomSheetFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 }
+
