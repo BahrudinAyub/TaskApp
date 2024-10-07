@@ -13,6 +13,32 @@
         android:theme="@style/Theme.TaskApp"
         tools:targetApi="31">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KebiasaanBaruActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TaskApp" />
+        <activity
+            android:name=".TugasBerulangActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TaskApp" />
+        <activity
+            android:name=".TimePickerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TugasDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TugasBaruActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskOptionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".CatatanActivity"
             android:exported="true" />
         <activity

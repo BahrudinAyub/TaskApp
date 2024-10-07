@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Jika tombol aktif -->
+    <item android:state_activated="true" android:drawable="@drawable/button_selected_background" />
+    <!-- Jika tombol default -->
+    <item android:drawable="@drawable/button_default_background" />
+</selector>

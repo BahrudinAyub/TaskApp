@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Membuatnya berbentuk oval atau kapsul -->
+    <corners android:radius="45dp" />
+
+    <!-- Warna biru sesuai gambar -->
+    <solid android:color="@color/red_button" />
+
+    <!-- Ukuran garis tepi dan warna jika ingin ada garis tepi -->
+    <stroke android:width="0dp" android:color="@android:color/transparent" />
+
+    <!-- Ukuran lebar dan tinggi -->
+    <size
+        android:width="35dp"
+        android:height="60dp"/>
+</shape>

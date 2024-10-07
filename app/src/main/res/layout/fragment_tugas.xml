@@ -1,13 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tugas Fragment"
-        android:textSize="24sp"
-        android:textColor="@android:color/black" />
-</FrameLayout>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Nama Bulan dan Tahun -->
+        <TextView
+            android:id="@+id/monthYearText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:padding="8dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="April 2024"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <!-- Tombol Sebelumnya -->
+        <ImageButton
+            android:id="@+id/previousMonthButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_left"
+            android:tint="@color/black"
+            tools:ignore="UseAppTint" />
+
+        <!-- Tombol Selanjutnya -->
+        <ImageButton
+            android:id="@+id/nextMonthButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_right"
+            android:tint="@color/black"
+            tools:ignore="UseAppTint" />
+    </LinearLayout>
+
+    <!-- Grid untuk Nama Hari -->
+    <GridLayout
+        android:id="@+id/daysOfWeekHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="7"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <!-- Nama hari akan ditambahkan secara dinamis di Kotlin -->
+    </GridLayout>
+
+    <!-- Grid untuk Kalender (Tanggal) -->
+    <GridLayout
+        android:id="@+id/calendarGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="7"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="8dp" />
+</LinearLayout>

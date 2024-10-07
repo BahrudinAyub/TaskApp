@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/navigation_1"
-        android:title="Catatan"
+        android:icon="@drawable/beranda"
+        android:title="Beranda"
         />
     <item
         android:id="@+id/nav_search"
-        android:icon="@drawable/navigation_2"
-        android:title="Tugas" />
+        android:icon="@drawable/kalender"
+        android:title="Kalender" />
     <item
         android:id="@+id/nav_notifications"
-        android:icon="@drawable/navigation_3"
-        android:title="Inspirasi" />
+        android:icon="@drawable/tugas"
+        android:title="Tugas" />
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/navigation_4"
+        android:icon="@drawable/profil"
         android:title="Profil" />
 </menu>
