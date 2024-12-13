@@ -60,4 +60,12 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
+    <!-- Existing strings -->
+
+    <string-array name="sorting_options">
+        <item>Dari prioritas</item>
+        <item>Dari waktu</item>
+    </string-array>
+
+
 </resources>

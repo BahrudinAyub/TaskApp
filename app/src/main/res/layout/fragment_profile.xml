@@ -86,10 +86,12 @@
 
             <!-- Settings item -->
             <LinearLayout
+                android:id="@+id/setting_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:onClick="navigateToSettings">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -100,10 +102,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Setting"
+                    android:text="Pengaturan"
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="16sp" />
             </LinearLayout>
+
 
             <!-- Friend item -->
             <LinearLayout
@@ -121,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Friend"
+                    android:text="Teman"
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -142,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="New Group"
+                    android:text="Tentang kami"
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -184,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Share"
+                    android:text="Berbagi"
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -206,6 +209,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="About Us"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- About Us item -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/log_out" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Keluar"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

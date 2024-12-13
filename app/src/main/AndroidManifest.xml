@@ -13,6 +13,28 @@
         android:theme="@style/Theme.TaskApp"
         tools:targetApi="31">
         <activity
+            android:name=".CustomSpinnerAdapter"
+            android:exported="false"
+            android:theme="@style/Theme.TaskApp" />
+        <activity
+            android:name=".NotificationSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TargetBaruActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AnggotaTeam"
+            android:exported="false" />
+        <activity
+            android:name=".ProjectDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity

@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+
 import com.example.taskapp.databinding.FragmentCatatanBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,8 +38,24 @@ class BerandaFragment : Fragment() {
         // Retrieve and display the habit task names
         displayHabitTasks()
 
+        // Handle clicks for project cards
+        binding.projectCard1.setOnClickListener {
+            val intent = Intent(activity, ProjectDetailActivity::class.java)
+            intent.putExtra("project_name", "Desain UI")
+            intent.putExtra("project_progress", 30) // Example progress value
+            startActivity(intent)
+        }
+
+        binding.projectCard2.setOnClickListener {
+            val intent = Intent(activity, ProjectDetailActivity::class.java)
+            intent.putExtra("project_name", "Tugas Laravel")
+            intent.putExtra("project_progress", 50) // Example progress value
+            startActivity(intent)
+        }
+
         return view
     }
+
 
     private fun setCurrentDate() {
         // Get the current date
@@ -288,6 +305,7 @@ class BerandaFragment : Fragment() {
             val optionTugas = dialog.findViewById<LinearLayout>(R.id.option_tugas)
             val optionTugasBerulang = dialog.findViewById<LinearLayout>(R.id.option_tugas_berulang)
             val optionKebiasaan = dialog.findViewById<LinearLayout>(R.id.option_kebiasaan)
+            val optionTarget = dialog.findViewById<LinearLayout>(R.id.option_target) // Tambahkan komponen Target
 
             optionTugas.setOnClickListener {
                 val intent = Intent(activity, TugasBaruActivity::class.java)
@@ -307,9 +325,16 @@ class BerandaFragment : Fragment() {
                 dialog.dismiss()
             }
 
+            optionTarget.setOnClickListener { // Tambahkan handler klik untuk Target
+                val intent = Intent(activity, TargetBaruActivity::class.java)
+                startActivity(intent)
+                dialog.dismiss()
+            }
+
             dialog.show()
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

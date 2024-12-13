@@ -14,6 +14,10 @@
         android:icon="@drawable/tugas"
         android:title="Tugas" />
     <item
+        android:id="@+id/nav_target"
+        android:icon="@drawable/target_bottom"
+        android:title="Target" />
+    <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/profil"
         android:title="Profil" />

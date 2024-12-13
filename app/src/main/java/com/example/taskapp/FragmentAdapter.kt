@@ -1,6 +1,5 @@
 package com.example.taskapp
 
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -8,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class FragmentAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount(): Int {
-        return 4 // Jumlah fragment
+        return 5 // Jumlah fragment
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -16,7 +15,8 @@ class FragmentAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter
             0 -> BerandaFragment()
             1 -> KalenderFragment()
             2 -> TugasFragment()
-            3 -> ProfilFragment()
+            3 -> TargetFragment()
+            4 -> ProfilFragment()
             else -> BerandaFragment()
         }
     }

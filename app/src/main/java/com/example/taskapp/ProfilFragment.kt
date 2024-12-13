@@ -27,6 +27,11 @@ class ProfilFragment : Fragment() {
             val intent = Intent(activity, EditProfileActivity::class.java)
             startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE)
         }
+        // Tambahkan onClickListener langsung
+        binding.settingItem.setOnClickListener {
+            val intent = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intent)
+        }
 
         return view
     }
@@ -47,6 +52,9 @@ class ProfilFragment : Fragment() {
             }
         }
     }
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

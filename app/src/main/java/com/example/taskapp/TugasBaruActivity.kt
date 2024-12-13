@@ -22,7 +22,7 @@ class TugasBaruActivity : AppCompatActivity() {
     private var currentYear = 2024
     val calendar = Calendar.getInstance()
     val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
-    
+
 
     private lateinit var calendarAdapter: CalendarTugasAdapter
     private lateinit var selectedTimeTextView: TextView
