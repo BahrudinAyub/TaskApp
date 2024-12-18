@@ -256,28 +256,22 @@ class TugasBaruActivity : AppCompatActivity() {
         return dates
     }
     private fun saveTaskData(taskName: String, priority: String, date: String, time: String) {
-        val sharedPref = getSharedPreferences("TaskApp", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
+        // Buat instance dari TugasBaruSharedPreferencesManager
+        val sharedPreferencesManager = TugasBaruSharedPreferencesManager(this)
 
-        // Get current tasks from SharedPreferences
-        val taskNames = sharedPref.getStringSet("task_names", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
-        val priorityLevels = sharedPref.getStringSet("priority_levels", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
-        val taskDates = sharedPref.getStringSet("task_dates", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
-        val taskTimes = sharedPref.getStringSet("task_times", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        // Buat objek Task baru
+        val task = Task(taskName, priority, date, time)
 
-        // Add new task data
-        taskNames.add(taskName)
-        priorityLevels.add(priority)
-        taskDates.add(date)
-        taskTimes.add(time)
+        // Ambil daftar tugas saat ini
+        val currentTasks = sharedPreferencesManager.getTaskList().toMutableList()
 
-        // Save updated tasks to SharedPreferences
-        editor.putStringSet("task_names", taskNames)
-        editor.putStringSet("priority_levels", priorityLevels)
-        editor.putStringSet("task_dates", taskDates)
-        editor.putStringSet("task_times", taskTimes)
-        editor.apply()
+        // Tambahkan tugas baru ke daftar
+        currentTasks.add(task)
+
+        // Simpan daftar tugas yang diperbarui
+        sharedPreferencesManager.saveTaskList(currentTasks)
     }
+
 
 
     private fun updateSelectedTime(hour: Int, minute: Int) {

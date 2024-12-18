@@ -1,9 +1,13 @@
 package com.example.taskapp
 
+import ProjectAdapter
+import ProjectData
+import ProjectPreferences
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.taskapp.databinding.FragmentCatatanBinding
 import java.text.SimpleDateFormat
@@ -38,20 +43,95 @@ class BerandaFragment : Fragment() {
         // Retrieve and display the habit task names
         displayHabitTasks()
 
-        // Handle clicks for project cards
-        binding.projectCard1.setOnClickListener {
-            val intent = Intent(activity, ProjectDetailActivity::class.java)
-            intent.putExtra("project_name", "Desain UI")
-            intent.putExtra("project_progress", 30) // Example progress value
+        // Pastikan kode ini berada di dalam Activity atau Fragment
+
+// Inisialisasi SharedPreferencesManager
+        val projectPreferences = ProjectPreferences(requireContext())
+        val sharedPreferencesManager = SharedPreferencesManager(requireContext())
+
+// Ambil RecyclerView dan Tombol dari binding
+        val projectRecyclerView = binding.recyclerViewProjects
+        val goalsRecyclerView = binding.recyclerViewGoals
+        val buttonTim = binding.buttonTim
+        val buttonGoals = binding.buttonGoals
+
+// Tambahkan data contoh jika kosong
+        if (projectPreferences.getProjectList().isEmpty()) {
+            projectPreferences.saveProjectData(ProjectData("Laravel", "Deskripsi Laravel"))
+            projectPreferences.saveProjectData(ProjectData("Tugas Kotlin", "Deskripsi Kotlin"))
+        }
+
+// Ambil data proyek
+        val projectList = projectPreferences.getProjectList().toMutableList()
+
+// Setup RecyclerView untuk proyek
+        projectRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        val projectAdapter = ProjectAdapter(projectList) { project ->
+            val intent = Intent(activity, ProjectDetailActivity::class.java).apply {
+                putExtra("project_name", project.projectName)
+                putExtra("project_description", project.projectDescription)
+            }
             startActivity(intent)
         }
 
-        binding.projectCard2.setOnClickListener {
-            val intent = Intent(activity, ProjectDetailActivity::class.java)
-            intent.putExtra("project_name", "Tugas Laravel")
-            intent.putExtra("project_progress", 50) // Example progress value
+        projectRecyclerView.adapter = projectAdapter
+        projectAdapter.notifyDataSetChanged()
+
+// Ambil data goalsList secara dinamis
+        val goalsList = sharedPreferencesManager.getTargetList()
+        Log.d("GoalsFragment", "Goals List: $goalsList")
+
+// Setup RecyclerView untuk goals
+        goalsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        val goalsAdapter = GoalsAdapterAlternate(goalsList) { goal ->
+            val intent = Intent(activity, TargetActivity::class.java).apply {
+                putExtra("goal_name", goal.namaTarget)
+                putExtra("goal_description", goal.deskripsi)
+                putExtra("goal_end_date", goal.tanggalSelesai)
+            }
             startActivity(intent)
         }
+
+        goalsRecyclerView.adapter = goalsAdapter
+        goalsAdapter.notifyDataSetChanged()
+
+        // Atur Tombol Tim
+        buttonTim.setOnClickListener {
+            // Tampilkan RecyclerView Projects, sembunyikan Goals
+            projectRecyclerView.visibility = View.VISIBLE
+            goalsRecyclerView.visibility = View.GONE
+
+            // Gaya tombol aktif untuk Tim
+            buttonTim.setBackgroundResource(R.drawable.button_unselected)
+            buttonTim.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+
+            // Gaya tombol default untuk Goals
+            buttonGoals.setBackgroundResource(R.drawable.button_selected)
+            buttonGoals.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_text))
+        }
+
+// Atur Tombol Goals
+        buttonGoals.setOnClickListener {
+            // Tampilkan RecyclerView Goals, sembunyikan Projects
+            goalsRecyclerView.visibility = View.VISIBLE
+            projectRecyclerView.visibility = View.GONE
+
+            // Gaya tombol aktif untuk Goals
+            buttonGoals.setBackgroundResource(R.drawable.button_unselected)
+            buttonGoals.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+
+            // Gaya tombol default untuk Tim
+            buttonTim.setBackgroundResource(R.drawable.button_selected)
+            buttonTim.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_text))
+        }
+
+
+
+
 
         return view
     }
@@ -69,193 +149,30 @@ class BerandaFragment : Fragment() {
     }
 
     private fun displayHabitTasks() {
-        val sharedPref = requireContext().getSharedPreferences("TaskApp", Context.MODE_PRIVATE)
+        // Buat instance dari TugasBaruSharedPreferencesManager
+        val sharedPreferencesManager = TugasBaruSharedPreferencesManager(requireContext())
 
-        // Existing habit task data
-        val habitTaskNames = sharedPref.getStringSet("habit_task_names", setOf())?.toMutableList() ?: mutableListOf()
-        val habitTimes = sharedPref.getStringSet("habit_reminder_times", setOf())?.toList() ?: listOf()
-        val habitActivityCounts = sharedPref.getStringSet("habit_activity_counts", setOf())?.toList() ?: listOf()
+        // Ambil semua tugas dari SharedPreferencesManager
+        val tasks = sharedPreferencesManager.getTaskList() // Gunakan getTaskList()
 
-        // New TugasBerulang task data
-        val taskNames = sharedPref.getStringSet("task_names", setOf())?.toMutableList() ?: mutableListOf()
-        val reminderTimes = sharedPref.getStringSet("reminder_times", setOf())?.toList() ?: listOf()
-        val priorities = sharedPref.getStringSet("priorities", setOf())?.toList() ?: listOf()
-
-        // Clear the container before adding new views
-        binding.dailyTasksContainer.removeAllViews()
-
-        // Existing Habit Tasks
-        for ((index, taskName) in habitTaskNames.withIndex()) {
-            val taskLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            }
-
-            val taskTextLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.VERTICAL
-                layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-            }
-
-            val habitTaskLabel = TextView(requireContext()).apply {
-                text = "Kebiasaan ${index + 1} — $taskName"
-                textSize = 16f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            }
-
-            val iconLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            }
-
-            val timeIcon = TextView(requireContext()).apply {
-                text = "\uD83D\uDD52"
-                textSize = 16f
-            }
-
-            val timeTextView = TextView(requireContext()).apply {
-                text = habitTimes.getOrNull(index) ?: "09:00"
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.red_button))
-            }
-
-            val activityIcon = TextView(requireContext()).apply {
-                text = "\uD83D\uDCCB"
-                textSize = 16f
-            }
-
-            val activityTextView = TextView(requireContext()).apply {
-                text = "1/${habitActivityCounts.getOrNull(index) ?: "1"}"
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.red_button))
-            }
-
-            iconLayout.addView(timeIcon)
-            iconLayout.addView(timeTextView)
-            iconLayout.addView(activityIcon)
-            iconLayout.addView(activityTextView)
-
-            taskTextLayout.addView(habitTaskLabel)
-            taskTextLayout.addView(iconLayout)
-
-            val habitTaskCheckbox = CheckBox(requireContext()).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                setOnClickListener {
-                    // Remove the task immediately from the list
-                    habitTaskNames.removeAt(index)
-
-                    // Save the updated task list to SharedPreferences
-                    saveUpdatedTasks(habitTaskNames.toSet())
-
-                    // Refresh the list by redisplaying the tasks
-                    displayHabitTasks()
-                }
-            }
-
-            taskLayout.addView(taskTextLayout)
-            taskLayout.addView(habitTaskCheckbox)
-
-            binding.dailyTasksContainer.addView(taskLayout)
+        // Set up RecyclerView dengan TaskAdapter
+        val taskAdapter = TaskAdapter(tasks) { task ->
+            // Handle task completion (e.g., remove from list)
+            val updatedTasks = tasks.toMutableList().apply { remove(task) }
+            // Update SharedPreferences
+            sharedPreferencesManager.saveTaskList(updatedTasks)
+            // Refresh RecyclerView
+            displayHabitTasks()
         }
 
-        // New TugasBerulang Tasks
-        for ((index, taskName) in taskNames.withIndex()) {
-            val taskLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            }
-
-            val taskTextLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.VERTICAL
-                layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-            }
-
-            val taskLabel = TextView(requireContext()).apply {
-                text = "TugasBerulang ${index + 1} — $taskName"
-                textSize = 16f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            }
-
-            val iconLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            }
-
-            val reminderIcon = TextView(requireContext()).apply {
-                text = "\uD83D\uDD52"
-                textSize = 16f
-            }
-
-            val reminderTimeTextView = TextView(requireContext()).apply {
-                text = reminderTimes.getOrNull(index) ?: "No reminder"
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.red_button))
-            }
-
-            val priorityIcon = TextView(requireContext()).apply {
-                text = "\uD83D\uDCCB"
-                textSize = 16f
-            }
-
-            val priorityTextView = TextView(requireContext()).apply {
-                text = "Prioritas: ${priorities.getOrNull(index) ?: "Default"}"
-                textSize = 14f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.red_button))
-            }
-
-            iconLayout.addView(reminderIcon)
-            iconLayout.addView(reminderTimeTextView)
-            iconLayout.addView(priorityIcon)
-            iconLayout.addView(priorityTextView)
-
-            taskTextLayout.addView(taskLabel)
-            taskTextLayout.addView(iconLayout)
-
-            val taskCheckbox = CheckBox(requireContext()).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                setOnClickListener {
-                    // Remove the task immediately from the list
-                    taskNames.removeAt(index)
-
-                    // Save the updated task list to SharedPreferences
-                    saveUpdatedTugas(taskNames.toSet())
-
-                    // Refresh the list by redisplaying the tasks
-                    displayHabitTasks()
-                }
-            }
-
-            taskLayout.addView(taskTextLayout)
-            taskLayout.addView(taskCheckbox)
-
-            binding.dailyTasksContainer.addView(taskLayout)
+        binding.rvDailyTasks.apply {
+            adapter = taskAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
+
+
+
 
     // Function to save updated habit tasks
     private fun saveUpdatedTasks(updatedTasks: Set<String>) {
@@ -278,9 +195,12 @@ class BerandaFragment : Fragment() {
     // Function to remove the new task (TugasBerulang) from SharedPreferences
     private fun removeTugasBerulang(index: Int) {
         val sharedPref = requireContext().getSharedPreferences("TaskApp", Context.MODE_PRIVATE)
-        val taskNames = sharedPref.getStringSet("task_names", setOf())?.toMutableSet() ?: mutableSetOf()
-        val reminderTimes = sharedPref.getStringSet("reminder_times", setOf())?.toMutableSet() ?: mutableSetOf()
-        val priorities = sharedPref.getStringSet("priorities", setOf())?.toMutableSet() ?: mutableSetOf()
+        val taskNames =
+            sharedPref.getStringSet("task_names", setOf())?.toMutableSet() ?: mutableSetOf()
+        val reminderTimes =
+            sharedPref.getStringSet("reminder_times", setOf())?.toMutableSet() ?: mutableSetOf()
+        val priorities =
+            sharedPref.getStringSet("priorities", setOf())?.toMutableSet() ?: mutableSetOf()
 
         if (index < taskNames.size) {
             taskNames.remove(taskNames.elementAt(index))
@@ -305,8 +225,9 @@ class BerandaFragment : Fragment() {
             val optionTugas = dialog.findViewById<LinearLayout>(R.id.option_tugas)
             val optionTugasBerulang = dialog.findViewById<LinearLayout>(R.id.option_tugas_berulang)
             val optionKebiasaan = dialog.findViewById<LinearLayout>(R.id.option_kebiasaan)
-            val optionTarget = dialog.findViewById<LinearLayout>(R.id.option_target) // Tambahkan komponen Target
-
+            val optionTarget =
+                dialog.findViewById<LinearLayout>(R.id.option_target) // Tambahkan komponen Target
+            val optionProyekTim = dialog.findViewById<LinearLayout>(R.id.option_proyek_tim)
             optionTugas.setOnClickListener {
                 val intent = Intent(activity, TugasBaruActivity::class.java)
                 startActivity(intent)
@@ -327,6 +248,11 @@ class BerandaFragment : Fragment() {
 
             optionTarget.setOnClickListener { // Tambahkan handler klik untuk Target
                 val intent = Intent(activity, TargetBaruActivity::class.java)
+                startActivity(intent)
+                dialog.dismiss()
+            }
+            optionProyekTim.setOnClickListener { // Tambahkan handler klik untuk Target
+                val intent = Intent(activity, ProyekTimActivity::class.java)
                 startActivity(intent)
                 dialog.dismiss()
             }

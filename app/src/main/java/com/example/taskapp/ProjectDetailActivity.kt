@@ -2,71 +2,108 @@ package com.example.taskapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.textfield.TextInputEditText
 
 class ProjectDetailActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
     private lateinit var tvProgressPercentage: TextView
     private lateinit var checkBoxes: List<CheckBox>
-    private var totalTasks = 5 // Total number of sub-tasks
+    private var totalTasks = 5
     private lateinit var addTeamIcon: ImageView
+    private lateinit var tvProjectName: TextView
+    private lateinit var tvProjectDescription: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_detail)
 
-        // Inisialisasi ImageView
+        // Inisialisasi Views
+        tvProjectName = findViewById(R.id.tvProjectName)
+        tvProjectDescription = findViewById(R.id.tvDescription)
         addTeamIcon = findViewById(R.id.addTeamIcon)
-
-        // Set onClickListener untuk ImageView
-        addTeamIcon.setOnClickListener {
-            // Navigasi ke halaman AnggotaTeam
-            val intent = Intent(this, AnggotaTeam::class.java)
-            startActivity(intent)
-        }
-
-        // Initialize Progress Bar and Progress Percentage
         progressBar = findViewById(R.id.progressBar)
         tvProgressPercentage = findViewById(R.id.tvProgressLabel)
 
-        // Initialize the checkboxes for each sub-task
-        val subTask1 = findViewById<CheckBox>(R.id.subtask1)
-        val subTask2 = findViewById<CheckBox>(R.id.subtask2)
-        val subTask3 = findViewById<CheckBox>(R.id.subtask3)
-        val subTask4 = findViewById<CheckBox>(R.id.subtask4)
-        val subTask5 = findViewById<CheckBox>(R.id.subtask5)
-        // Add other sub-tasks similarly...
 
-        checkBoxes = listOf(subTask1, subTask2 ,subTask3, subTask4, subTask5 )
+        // Terima data dari Intent
+        val projectName = intent.getStringExtra("project_name") ?: "Nama proyek tidak ditemukan"
+        val projectDescription =
+            intent.getStringExtra("project_description") ?: "Deskripsi tidak tersedia"
 
-        // Set up listeners for each checkbox
-        for (checkBox in checkBoxes) {
-            checkBox.setOnCheckedChangeListener { _, _ ->
-                updateProgress()
+        // Set data ke TextView
+        tvProjectName.text = projectName
+        tvProjectDescription.text = projectDescription
+
+        val btnAddTask: ImageView = findViewById(R.id.btnAddTask)
+        btnAddTask.setOnClickListener {
+            val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_target, null)
+            val builder = AlertDialog.Builder(this).setView(dialogView)
+            val dialog = builder.create()
+
+            // Inisialisasi Views dari dialog
+            val etNamaTarget = dialogView.findViewById<TextInputEditText>(R.id.et_nama_task)
+            val rbIntervalPengukuran = dialogView.findViewById<RadioButton>(R.id.rb_interval_pengukuran)
+            val intervalLayout = dialogView.findViewById<LinearLayout>(R.id.intervalLayout)
+            val rbSedangBerlangsung = dialogView.findViewById<RadioButton>(R.id.rb_sedang_berlangsung)
+            val layoutSedangBerlangsung = dialogView.findViewById<LinearLayout>(R.id.layout_sedang_berlangsung)
+            val rbMataUang = dialogView.findViewById<RadioButton>(R.id.rb_mata_uang)
+            val layoutMataUang = dialogView.findViewById<LinearLayout>(R.id.layout_mata_uang)
+            val tvSelesai = dialogView.findViewById<TextView>(R.id.tv_selesai)
+
+            rbIntervalPengukuran.setOnCheckedChangeListener { _, isChecked ->
+                intervalLayout.visibility = if (isChecked) LinearLayout.VISIBLE else LinearLayout.GONE
             }
+
+            rbSedangBerlangsung.setOnCheckedChangeListener { _, isChecked ->
+                layoutSedangBerlangsung.visibility = if (isChecked) LinearLayout.VISIBLE else LinearLayout.GONE
+                if (isChecked) setupToggleButton(dialogView)
+            }
+
+            rbMataUang.setOnCheckedChangeListener { _, isChecked ->
+                layoutMataUang.visibility = if (isChecked) LinearLayout.VISIBLE else LinearLayout.GONE
+            }
+
+            tvSelesai.setOnClickListener {
+                val namaTarget = etNamaTarget.text.toString()
+                Toast.makeText(this, "Target: $namaTarget disimpan", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+
+            dialog.show()
         }
-
-        // Initialize the progress based on initial checked status
-        updateProgress()
-
     }
 
-    // Function to update the progress bar and text
-    private fun updateProgress() {
-        // Calculate the number of checked tasks
-        val completedTasks = checkBoxes.count { it.isChecked }
+    // Fungsi untuk mengatur warna tombol toggle
+    private fun setupToggleButton(dialogView: android.view.View) {
+        val toggleGroup = dialogView.findViewById<MaterialButtonToggleGroup>(R.id.layout_sedang_berlangsung)
+        val btnBerlangsung = dialogView.findViewById<MaterialButton>(R.id.btn_berlangsung)
+        val btnSelesai = dialogView.findViewById<MaterialButton>(R.id.btn_selesai)
 
-        // Calculate the progress percentage
-        val progressPercentage = (completedTasks.toDouble() / totalTasks) * 100
-
-        // Update the progress bar and the percentage text
-        progressBar.progress = progressPercentage.toInt()
-        tvProgressPercentage.text = "${progressPercentage.toInt()}%"
+        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btn_berlangsung -> {
+                        btnBerlangsung.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
+                        btnBerlangsung.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        btnSelesai.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                        btnSelesai.setTextColor(ContextCompat.getColor(this, R.color.black))
+                    }
+                    R.id.btn_selesai -> {
+                        btnSelesai.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
+                        btnSelesai.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        btnBerlangsung.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                        btnBerlangsung.setTextColor(ContextCompat.getColor(this, R.color.black))
+                    }
+                }
+            }
+        }
     }
 }

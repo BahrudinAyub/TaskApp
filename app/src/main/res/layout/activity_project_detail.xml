@@ -111,6 +111,21 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Text Above Description -->
+    <TextView
+        android:id="@+id/tvDescriptionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deskripsi Proyek"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="240dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/managerSection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Description -->
     <TextView
         android:id="@+id/tvDescription"
@@ -119,10 +134,11 @@
         android:text="Antarmuka Pengguna (UI) adalah titik interaksi antara manusia dan mesin dalam perangkat lunak atau perangkat keras..."
         android:textSize="14sp"
         android:textColor="@color/gray_text"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/managerSection" />
+        app:layout_constraintTop_toBottomOf="@id/tvDescriptionTitle" />
+
 
     <!-- Team Section -->
     <LinearLayout
@@ -197,115 +213,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Sub-tasks List -->
     <LinearLayout
-        android:id="@+id/subTasksList"
+        android:id="@+id/subTasksHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/progressBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Sub-task 1 -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Label Tugas -->
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Tugas"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tugas 1 — Membuat moodboard"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <CheckBox
-                android:id="@+id/subtask1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Sub-task 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tugas 2 — Membuat wireframe"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <CheckBox
-                android:id="@+id/subtask2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Sub-task 3 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tugas 3 — Membuat komponen desain"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <CheckBox
-                android:id="@+id/subtask3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Sub-task 4 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tugas 4 — Meeting dengan klien"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <CheckBox
-                android:id="@+id/subtask4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Sub-task 5 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tugas 5 — Membuat desain"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <CheckBox
-                android:id="@+id/subtask5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <!-- Tombol "+" untuk Menambahkan Tugas -->
+        <ImageView
+            android:id="@+id/btnAddTask"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/add_tugas"
+            android:contentDescription="Tambah Tugas"
+            android:background="@drawable/rounded_background_blue"
+            android:scaleType="centerInside"
+            android:padding="8dp" />
     </LinearLayout>
+
+    <!-- Menambahkan TextView untuk menampilkan nama target -->
+    <TextView
+        android:id="@+id/tvNamaTarget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

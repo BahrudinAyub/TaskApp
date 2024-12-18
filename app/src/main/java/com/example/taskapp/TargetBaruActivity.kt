@@ -84,12 +84,17 @@ class TargetBaruActivity : AppCompatActivity() {
         val deskripsi = deskripsiInput.text.toString()
         val tanggalSelesai = textTanggalSelesai.text.toString()
 
-        sharedPreferencesManager.saveTargetData(namaTarget, deskripsi, tanggalSelesai)
+        // Buat objek Target baru
+        val newTarget = Target(namaTarget, deskripsi, tanggalSelesai)
+
+        // Tambahkan target ke dalam daftar yang sudah ada
+        sharedPreferencesManager.addTarget(newTarget)
     }
+
 
     private fun navigateToTargetFragment() {
         // Navigate to the fragment where the saved data is displayed
-        val intent = Intent(this, TargetFragment::class.java)
+        val intent = Intent(this, TargetActivity::class.java)
         startActivity(intent)
     }
 }

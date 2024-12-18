@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,13 +13,17 @@ class TugasFragment : Fragment() {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var recyclerView: RecyclerView
-    private lateinit var tugasAdapter: TugasAdapter
+    private lateinit var tugasAdapter: TaskAdapter
+    private lateinit var sharedPreferencesManager: TugasBaruSharedPreferencesManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list_tugas, container, false)
+
+        // Setup SharedPreferencesManager
+        sharedPreferencesManager = TugasBaruSharedPreferencesManager(requireContext())
 
         // Setup TabLayout dan RecyclerView
         tabLayout = view.findViewById(R.id.tabLayout)
@@ -40,9 +43,9 @@ class TugasFragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> tugasAdapter.updateList(getTugasList())
-                    1 -> tugasAdapter.updateList(getTugasBerulangList())
-                    2 -> tugasAdapter.updateList(getKebiasaanList())
+                    0 -> tugasAdapter.updateList(sharedPreferencesManager.getTaskList()) // Menampilkan daftar tugas
+                    1 -> tugasAdapter.updateList(getTugasBerulangList()) // Data Tugas Berulang
+                    2 -> tugasAdapter.updateList(getKebiasaanList()) // Data Kebiasaan
                 }
             }
 
@@ -54,30 +57,28 @@ class TugasFragment : Fragment() {
 
     private fun setupRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        tugasAdapter = TugasAdapter(getTugasList()) // Menampilkan tugas default
+        val tasks = sharedPreferencesManager.getTaskList() // Ambil data awal dari SharedPreferences
+        tugasAdapter = TaskAdapter(tasks) { task ->
+            // Hapus tugas ketika checkbox diaktifkan
+            val updatedTasks = tasks.toMutableList().apply { remove(task) }
+            sharedPreferencesManager.saveTaskList(updatedTasks) // Simpan daftar tugas yang diperbarui
+            tugasAdapter.updateList(updatedTasks) // Refresh data di adapter
+        }
         recyclerView.adapter = tugasAdapter
     }
 
-    private fun getTugasList(): List<Tugas> {
+    private fun getTugasBerulangList(): List<Task> {
         return listOf(
-            Tugas("Membuat Dashboard UI", "20:00", true),
-            Tugas("Mengerjakan Kuis", "07:00", true),
-            Tugas("Mempelajari Wireframe", "18:00", true),
-            Tugas("Membuat Resume", "09:00", false)
+            Task("Membaca Buku", "High", "Sel - Kam", "08:00"),
+            Task("Menyampaikan Progres", "Medium", "15, 28", "09:00"),
+            Task("Olahraga", "Low", "Tiap Hari", "06:00")
         )
     }
 
-    private fun getTugasBerulangList(): List<Tugas> {
+    private fun getKebiasaanList(): List<Task> {
         return listOf(
-            Tugas("Membaca Buku", "Sel - Kam", true),
-            Tugas("Menyampaikan Progres", "15, 28", true),
-            Tugas("Olahraga", "Tiap Hari", false)
-        )
-    }
-
-    private fun getKebiasaanList(): List<Tugas> {
-        return listOf(
-            Tugas("Membaca Buku", "Sel - Kam", true)
+            Task("Meditasi", "Medium", "Tiap Pagi", "07:00"),
+            Task("Jurnal Harian", "Low", "Tiap Malam", "22:00")
         )
     }
 }

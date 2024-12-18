@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
+
 class FragmentAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount(): Int {
@@ -15,7 +16,7 @@ class FragmentAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter
             0 -> BerandaFragment()
             1 -> KalenderFragment()
             2 -> TugasFragment()
-            3 -> TargetFragment()
+            3 -> GoalsFragment()
             4 -> ProfilFragment()
             else -> BerandaFragment()
         }

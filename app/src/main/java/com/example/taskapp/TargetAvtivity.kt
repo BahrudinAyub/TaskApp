@@ -1,55 +1,47 @@
 package com.example.taskapp
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 
-class TargetFragment : Fragment() {
+class TargetActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferencesManager: SharedPreferencesManager
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_target, container, false)
-        val addTargetButton = view.findViewById<FrameLayout>(R.id.fl_add_target)
-        addTargetButton.setOnClickListener {
-            showAddTargetDialog() // Fungsi untuk menampilkan dialog
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_target)
+
+        try {
+            // Ambil data dari Intent dengan nilai default jika null
+            val namaTarget = intent.getStringExtra("NAMA_TARGET") ?: "Tidak Ada Nama Target"
+            val deskripsi = intent.getStringExtra("DESKRIPSI") ?: "Tidak Ada Deskripsi"
+            val tanggalSelesai = intent.getStringExtra("TANGGAL_SELESAI") ?: "Tidak Ada Tanggal"
+
+            // Update UI dengan data
+            findViewById<TextView>(R.id.nama_target_text).text = namaTarget
+            findViewById<TextView>(R.id.deskripsi_text).text = deskripsi
+            findViewById<TextView>(R.id.tanggal_selesai_text).text = "Berakhir: $tanggalSelesai"
+        } catch (e: Exception) {
+            e.printStackTrace() // Log error untuk debugging
         }
-
-        // Initialize SharedPreferencesManager
-        sharedPreferencesManager = SharedPreferencesManager(requireContext())
-
-        // Fetch the saved data
-        val target = sharedPreferencesManager.getTargetData()
-
-        // Update UI with saved data
-        view.findViewById<TextView>(R.id.nama_target_text).text = target.namaTarget
-        view.findViewById<TextView>(R.id.deskripsi_text).text = target.deskripsi
-        view.findViewById<TextView>(R.id.tanggal_selesai_text).text = "Berakhir: ${target.tanggalSelesai}"
-
-        return view
     }
 
+
+
     private fun showAddTargetDialog() {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_target, null)
-        val dialogBuilder = AlertDialog.Builder(requireContext())
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_target, null)
+        val dialogBuilder = AlertDialog.Builder(this)
             .setView(dialogView)
             .setCancelable(true)
 
@@ -76,18 +68,18 @@ class TargetFragment : Fragment() {
             when (checkedId) {
                 R.id.btn_berlangsung -> {
                     if (isChecked) {
-                        btnBerlangsung.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
-                        btnBerlangsung.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        btnSelesai.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        btnSelesai.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                        btnBerlangsung.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
+                        btnBerlangsung.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        btnSelesai.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                        btnSelesai.setTextColor(ContextCompat.getColor(this, R.color.black))
                     }
                 }
                 R.id.btn_selesai -> {
                     if (isChecked) {
-                        btnSelesai.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
-                        btnSelesai.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        btnBerlangsung.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        btnBerlangsung.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                        btnSelesai.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
+                        btnSelesai.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        btnBerlangsung.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                        btnBerlangsung.setTextColor(ContextCompat.getColor(this, R.color.black))
                     }
                 }
             }

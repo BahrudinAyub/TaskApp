@@ -1,0 +1,12 @@
+data class ProjectData(
+    val projectName: String,          // Nama Proyek (Wajib)
+    val projectDescription: String,   // Deskripsi Proyek (Wajib)
+    val specificDate: String? = null, // Tanggal tertentu dalam setahun (Nullable)
+    val activityDays: Int? = null,    // Hari aktivitas dalam siklus (Nullable)
+    val restDays: Int? = null,        // Hari istirahat dalam siklus (Nullable)
+    val startDate: String? = null,    // Tanggal mulai (Nullable)
+    val endDate: String? = null,      // Tanggal selesai (Nullable)
+    val reminderCount: Int? = null,   // Pengingat (Nullable)
+    val priority: String? = null,     // Prioritas (Nullable)
+    val postponeTask: Boolean = false // Tunda Tugas (default false)
+)
